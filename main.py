@@ -1,7 +1,7 @@
 import sys
 
 import gi
-
+from paycon_api import get_api1_data_names
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib,Gtk
 
@@ -37,14 +37,20 @@ class MainWindow(Gtk.Window):
     def create_buttons(self):
         button_api = Gtk.Button(label="Загрузить из API")
         button_csv = Gtk.Button(label="Загрузить из файла")
-        button_api.connect("clicked", self.on_button_clicked)
-        button_csv.connect("clicked", self.on_button_clicked)
 
-        self.add(button_api)
-        self.add(button_csv)
+        button_api.connect("clicked", self.get_api_response)
+        button_csv.connect("clicked", self.on_button_clicked)
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        box.pack_start(button_api, True, True, 50)
+        box.pack_start(button_csv, True, True, 50)
+        self.add(box)
 
     def on_button_clicked(self, widget):
         print("Button clicked!")
+
+
+    def get_api_response(self,widget):
+        get_api1_data_names()
 
 win = MainWindow()
 win.create_buttons()
