@@ -8,6 +8,6 @@ def get_api_data_names(url: str = paycon_url):
     try:
         json_bin = urllib.request.urlopen(paycon_url)
         data = json.load(json_bin)
-        return data
+        return [f'{item["name"]} {item["price"]}' for item in data]
     except ConnectionError:
         return
